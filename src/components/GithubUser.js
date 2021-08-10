@@ -17,7 +17,7 @@ export default function GithubUser({ login }) {
     );
   }
   // fetched data arrived
-  console.log(data);
+  // console.log(data);
   return (
     <>
       <h2>User {data.login}</h2>
