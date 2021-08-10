@@ -1,18 +1,13 @@
 import React from 'react';
 import './App.css';
-import { useTrees } from './';  // index file
+import GithubUser from './components/GithubUser';
 
+// How to fetch data with a custom hook
 function App() {
-  // Refactoring the sharing of the context by a custom hook
-  const { trees } = useTrees();
-  // console.log(trees);
   return (
     <div className="App">
-      <h1>Use of Context to share some values</h1>
-      <h2>Trees I've heard of:</h2>
-      <ul>
-        {trees.map(tree => (<li key={tree.id}>{tree.type}</li>))}
-      </ul>
+      <h1>Fetching data from an API with a custom hook</h1>
+      <GithubUser login={'heladiofog'} />
     </div>
   );
 }
