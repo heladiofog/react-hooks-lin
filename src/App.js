@@ -2,29 +2,37 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
-  const [name, setName] = useState('Lin');
-  const [isAdmin, setIsAdmin] = useState(false);
+  // Consuming an API
+  const [data, setData] = useState([]);
 
-  // UseEffect example, it runs after each render!! in every object
+  // Effects
   useEffect(() => {
-    // document.title = `Celebrate ${name}`;
-    console.log(`Celebrate ${name}`)
-  }, [name]); // If the array is empty, the effect only fires once, on first render
+    fetch(`https://api.github.com/users`)
+      .then(response => response.json())
+      // .then(json => setData(json))
+      .then(setData); // A kind of a shortcut of the above statement
+  }, []); // It could fire an infinite chain of calls, it should be controlled by the dependency array correctly!!
 
-  // We just want the isAdmin value change to fire the related effect
-  useEffect(() => {
-    console.log(`The user is: ${isAdmin ? 'Admin' : 'No admin'}`);
-  } ,[isAdmin]);
+  if (data) {
+    return (
+      <>
+        <h1>API consuming:</h1>
+        <h2>https://api.github.com/users</h2>
+        <p>Users (login field)</p>
+        <ul>
+          {data.map((user) => (
+            <li key={user.id}>{user.login}</li>
+          ))}
+        </ul>
+        <button onClick={() => setData([])}>Remove Data</button>
+      </>
+    );
+  }
 
   return (
     <div className="App">
-      <section>
-        <h1>Congratulations {name}!</h1>
-        <button onClick={() => setName("Tezca")}>Change Winner name</button>
-      </section>
-
-      <p>{isAdmin ? "Logged In": "Not Logged In" }</p>
-      <button onClick={() => setIsAdmin(true)}>Log In</button>
+      <h1>API Consuming -finally-</h1>
+      <p>No users yet!</p>
     </div>
   );
 }
