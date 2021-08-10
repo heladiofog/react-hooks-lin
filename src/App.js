@@ -1,23 +1,21 @@
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 
-// A hook pretty important is the:  useRef
-// It will allow us to reach out to a component and determine its value
-// It is extremely useful particularly with forms
+// A Controlled Component is another way to handle inputs in a form
+// It means that you handle form inputs using state variables.
 
-
+// Refactoring useRef example into a Controlled component
 function App() {
   // components by useRef
-  const sound = useRef();
-  const color = useRef();
+  const [sound, setSound] = useState("");
+  const [color, setColor] = useState("#000000");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const soundValue = sound.current.value;
-    const colorValue = color.current.value;
-    alert(`${soundValue} sounds like ${colorValue}.`);
-    sound.current.value = "";
-    color.current.value = "#000000";
+    alert(`${sound} sounds like ${color}.`);
+    // Reset the input fields
+    setSound("");
+    setColor("#000000");
   }
 
   return (
@@ -25,8 +23,17 @@ function App() {
       <h1>Use of the useRef Hook</h1>
       <p>Fill the inputs in the following form:</p>
       <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="Sound..." ref={sound} />
-        <input type="color" ref={color} />
+        <input
+          type="text"
+          placeholder="Sound..."
+          value={sound}
+          onChange={(e) => setSound(e.target.value)}
+        />
+        <input
+          type="color"
+          value={color}
+          onChange={(e) => setColor(e.target.value)}
+        />
         <button type="submit">Send</button>
       </form>
     </div>
