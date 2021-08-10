@@ -1,46 +1,34 @@
-import React, { useReducer } from 'react';
+import React, { useRef } from 'react';
 import './App.css';
 
-// Another just a little more complex example with useReducer Hook
-// Initial State:
-const initialState = {
-  message: 'You say YES, I say NO...'
-};
-// The reducer function takes in a state (the PREVIOUS STATE) and an action...
-// And it returns a new state!! :O
-// The real benefit of having access to the previous state is that we can use it!!
-function reducer(state, action) {
-  switch (action.type) {
-    case 'hello':
-      return {
-        message: `I don't know why i said "Hello, hello!" ${state.message}`
-      };
-    case 'bye':
-      return {
-        message: `I don't know why i said "Goodbye, goodbye!" ${state.message}`
-      };
-    default:
-      return {
-        message: "by The Beatles"
-      };
-  }
-};
+// A hook pretty important is the:  useRef
+// It will allow us to reach out to a component and determine its value
+// It is extremely useful particularly with forms
+
 
 function App() {
-  const [state, dispatch] = useReducer(
-    reducer,
-    initialState
-  );
+  // components by useRef
+  const sound = useRef();
+  const color = useRef();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const soundValue = sound.current.value;
+    const colorValue = color.current.value;
+    alert(`${soundValue} sounds like ${colorValue}.`);
+    sound.current.value = "";
+    color.current.value = "#000000";
+  }
 
   return (
     <div className="App">
-      <h1>Hello goodbye with useReducer:</h1>
-      <p>{state.message}</p>
-      <div>
-        <button onClick={() => dispatch({ type: 'hello' })}>Hello</button>
-        <button onClick={() => dispatch({ type: 'bye' })}>Bye</button>
-        <button onClick={() => dispatch({ type: null })}>Clear..</button>
-      </div>
+      <h1>Use of the useRef Hook</h1>
+      <p>Fill the inputs in the following form:</p>
+      <form onSubmit={handleSubmit}>
+        <input type="text" placeholder="Sound..." ref={sound} />
+        <input type="color" ref={color} />
+        <button type="submit">Send</button>
+      </form>
     </div>
   );
 }
