@@ -1,38 +1,40 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
-
-// A Controlled Component is another way to handle inputs in a form
-// It means that you handle form inputs using state variables.
-
-// Refactoring useRef example into a Controlled component
+import { useInput } from './hooks/useInput';
+// Extract/abstract logic into a Custom hook.
+// Refactoring the Controlled component example into a "hook-controlled component"
 function App() {
-  // components by useRef
-  const [sound, setSound] = useState("");
-  const [color, setColor] = useState("#000000");
+  // Instead of using inputs, we're going to use the input hook
+  const [soundProps, resetSound] = useInput("");
+  const [colorProps, resetColor] = useInput("#000000");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert(`${sound} sounds like ${color}.`);
+    alert(`${soundProps.value} sounds like ${colorProps.value}.`);
     // Reset the input fields
-    setSound("");
-    setColor("#000000");
+    resetSound("");
+    resetColor("#000000");
   }
 
   return (
     <div className="App">
-      <h1>Use of the useRef Hook</h1>
+      <h1>Use of a Controlled component and a Custom Hook</h1>
       <p>Fill the inputs in the following form:</p>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
           placeholder="Sound..."
-          value={sound}
-          onChange={(e) => setSound(e.target.value)}
+          // These two props will be replaced for the provided ones by the hook
+          // value={sound}
+          // onChange={(e) => setSound(e.target.value)}
+          {...soundProps}
         />
         <input
           type="color"
-          value={color}
-          onChange={(e) => setColor(e.target.value)}
+          // These two props will be replaced for the provided ones by the hook
+          // value={color}
+          // onChange={(e) => setColor(e.target.value)}
+          {...colorProps}
         />
         <button type="submit">Send</button>
       </form>
