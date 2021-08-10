@@ -1,38 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useReducer } from 'react';
 import './App.css';
 
 function App() {
-  // Consuming an API
-  const [data, setData] = useState([]);
-
-  // Effects
-  useEffect(() => {
-    fetch(`https://api.github.com/users`)
-      .then(response => response.json())
-      // .then(json => setData(json))
-      .then(setData); // A kind of a shortcut of the above statement
-  }, []); // It could fire an infinite chain of calls, it should be controlled by the dependency array correctly!!
-
-  if (data) {
-    return (
-      <>
-        <h1>API consuming:</h1>
-        <h2>https://api.github.com/users</h2>
-        <p>Users (login field)</p>
-        <ul>
-          {data.map((user) => (
-            <li key={user.id}>{user.login}</li>
-          ))}
-        </ul>
-        <button onClick={() => setData([])}>Remove Data</button>
-      </>
-    );
-  }
+  // Using useReducer, which is usually preferable than useState
+  const [number, setNumber] = useReducer(
+    (number, newNumber) => number + newNumber,     // reducer function that returns a new state
+    0           // Initial State
+  );
 
   return (
     <div className="App">
-      <h1>API Consuming -finally-</h1>
-      <p>No users yet!</p>
+      <h1>Using useReducer</h1>
+      <p>Click on the number: <span style={{'fontWeight': 'bold'}} onClick={() => setNumber(1)}>{number}</span></p>
     </div>
   );
 }
