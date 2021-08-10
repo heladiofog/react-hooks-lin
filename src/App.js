@@ -1,15 +1,15 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import './App.css';
-import { TreesContext } from './';  // index file
+import { useTrees } from './';  // index file
 
 function App() {
-  // const treesContext = useContext(TreesContext);
-  const { trees } = useContext(TreesContext);
+  // Refactoring the sharing of the context by a custom hook
+  const { trees } = useTrees();
   // console.log(trees);
   return (
     <div className="App">
       <h1>Use of Context to share some values</h1>
-      <h3>Trees I've heard of:</h3>
+      <h2>Trees I've heard of:</h2>
       <ul>
         {trees.map(tree => (<li key={tree.id}>{tree.type}</li>))}
       </ul>

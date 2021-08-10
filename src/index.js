@@ -1,12 +1,15 @@
-import React, { createContext } from 'react';
+import React, { createContext, useContext } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-// Share values to be available through the components tree
+// Sharing values to be available through the components tree
 // These values are passed down with react context
-export const TreesContext = createContext();
+// Refactoring the context use
+const TreesContext = createContext();
+// Trees custom hook with the tree context to reuse the functionality
+export const useTrees = () => useContext(TreesContext);
 
 // Trees example to be accessible to our entire app
 const trees = [
