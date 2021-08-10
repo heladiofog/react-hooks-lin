@@ -2,17 +2,18 @@ import React, {useState} from 'react';
 import './App.css';
 
 function App() {
-  const [status, setStatus] = useState('Not delivered');
+  const [checked, setChecked] = useState(false);
 
   return (
     <div className="App">
       <h1>The package is:</h1>
-      <h2>{status}</h2>
-      <div>
-        <button onClick={() => setStatus("Delivered")}>
-          Deliver
-        </button>
-      </div>
+      <input 
+        type="checkbox"
+        value={checked}
+        // A little enhancement for the value setting
+        onChange={() => setChecked(checked => !checked)}
+      />
+      <p>{checked ? "Checked" : "not checked"}</p>
     </div>
   );
 }
