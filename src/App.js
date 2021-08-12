@@ -12,13 +12,14 @@ function App() {
   const gapi = useGoogleApi();
   // console.log("is loaded the google API?: " + !!gapi);
   if (!gapi) {
-    <div>
-      <h2>Wait for it!</h2>
-      <Spinner />
-    </div>
+    return (
+      <div>
+        <h2>Wait for it!</h2>
+        <Spinner />
+      </div>
+    );
   }
-  // console.log(gapi);
-  
+  console.log(gapi);
   return (
     <div className="App">
       <YTVideos />
